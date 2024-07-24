@@ -1,0 +1,39 @@
+.m-container{
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.m-container button{
+    width: 25%;
+    height: 50%;
+    margin: 30px;
+    background-color: transparent;
+    border: 5px solid #b345d4;
+    border-radius: 50px;
+    font-size: 60px;
+    color: #b345d4 ;
+}
+
+.m-container button:hover{
+   
+    margin: 20px;
+    background-color: #b345d4;
+    border: 5px solid #b345d4;
+    border-radius: 50px;
+    font-size: 60px;
+    color: white ;
+    cursor: pointer;
+    transition: ease-in-out .5s;
+}
+
+@media (max-width: 550px) {
+    .m-container{
+        flex-direction: column;
+    }
+    
+    
+}

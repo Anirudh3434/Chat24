@@ -1,0 +1,49 @@
+nav{
+  
+    padding: 10px;
+    width: 100%;
+    position: sticky;
+  
+}
+
+.brand-logo{
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(179, 69, 212);
+    text-decoration: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.nav-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login {
+    margin: 10px;
+    padding: 10px;
+    background-color: transparent;
+    border: 2px solid rgb(179, 69, 212);
+    border-radius: 30px;
+    font-size: 20px;
+    color: rgb(179, 69, 212);
+    font-weight: 500;
+  }
+  
+  .login:hover {
+    color: white;
+    background-color: rgb(179, 69, 212);
+    transition: ease 0.5s;
+  }
+  .start {
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(179, 69, 212);
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    color: white;
+    font-weight: 500;
+  }
