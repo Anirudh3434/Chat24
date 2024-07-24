@@ -59,7 +59,7 @@ function Sender() {
     return (
         <div className="login-container">
             <div className="login-box">
-                <h2>Sender</h2>
+                <h2>Create Chat Session</h2>
                 
                 <form onSubmit={sendMsg}>
                     <div className="input-group">

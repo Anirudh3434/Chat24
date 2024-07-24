@@ -1,21 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Header from './Component/Header/Header'
-import Footer from './Component/Footer/Footer'
-import { Outlet } from 'react-router-dom'
+// src/App.js
+import { useState, useEffect } from 'react';
+import './App.css';
+import Header from './Component/Header/Header';
+import Footer from './Component/Footer/Footer';
+import { Outlet } from 'react-router-dom';
+import Loader from './Component//Loader/Loader';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
+
+    return () => clearTimeout(timer); 
+  }, []);
 
   return (
     <>
-     <Header />
-     <Outlet/>
-     <Footer />
+      {loading && <Loader />}
+      <Header />
+      <Outlet />
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

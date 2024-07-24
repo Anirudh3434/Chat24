@@ -8,12 +8,13 @@ nav {
 }
 
 .brand-logo {
+  margin-left: .5rem;
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 400;
   color: rgb(179, 69, 212);
   text-decoration: none;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  margin: 0; /* Reset margin */
+ 
 }
 
 .nav-wrapper {

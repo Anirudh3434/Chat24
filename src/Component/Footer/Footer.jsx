@@ -5,11 +5,7 @@ import authService from '../../../Appwrite/auth';
 
 const Footer = () => {
 
-  const handleLogout = () => {
-    authService.logout();
-    dispatch(logOut()); 
-    navigate('/');
-};
+  
 
   return (
     <footer className="footer-container">
@@ -30,7 +26,7 @@ const Footer = () => {
         <h4>Follow Us</h4>
         <p>Facebook | Twitter | Instagram</p>
       </div>
-       <button onClick={handleLogout}>logout</button>
+      
     </footer>
   );
 };

@@ -11,6 +11,8 @@ function Home() {
   const [username, setUser] = useState(null);
 
   const status = useSelector((state)=>state.auth.status)
+
+  const navigate = useNavigate()
   
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,10 +30,9 @@ function Home() {
 }, [status]);
   
 
-    const signup = ()=>{
-   
-        navigate('/signup')
-    }
+const handleSignup = () => {
+  navigate('/signup'); 
+};
 
     
 
@@ -39,8 +40,8 @@ function Home() {
       <div className='container'>
         <div className='title-area'>
            <h1>Create Chat</h1>
-           <h3 className=''>"Hi ! Welcome to our messaging platform. <br />Ready to start a new conversation?"</h3>
-           <button className='start1' onClick={signup}>Get Started</button>
+           <h3 className=''>Hi <span className='name'>{username}</span> ! Welcome to our messaging platform. <br />Ready to start a new conversation?</h3>
+           <button className='start1' onClick={handleSignup}>Get Started</button>
         </div>
        
       </div>
