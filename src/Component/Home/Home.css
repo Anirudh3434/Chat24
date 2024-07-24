@@ -31,10 +31,10 @@ h3{
 
 @media (max-width: 550px) {
    h1{
-    font-size: 30px;
+    font-size: 40px;
    }
 
    h3{
-          font-size: 20px;
+          font-size: 25px;
    }
 }
