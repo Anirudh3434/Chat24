@@ -50,5 +50,8 @@ h3 {
     }
   .container{
     background-image: none;
+    align-items: center;
+    height: 60vh;
   }
+  
 }
