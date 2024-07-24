@@ -19,7 +19,7 @@ function Home() {
             setUser(currentUser.name);
         } catch (error) {
            
-            alert(error);
+           
             setUser(null)
         }
     };

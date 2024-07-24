@@ -1,7 +1,16 @@
 import React from 'react';
 import './Footer.css';
+import authService from '../../../Appwrite/auth';
+
 
 const Footer = () => {
+
+  const handleLogout = () => {
+    authService.logout();
+    dispatch(logOut()); 
+    navigate('/');
+};
+
   return (
     <footer className="footer-container">
       <div className="footer-section">
@@ -21,6 +30,7 @@ const Footer = () => {
         <h4>Follow Us</h4>
         <p>Facebook | Twitter | Instagram</p>
       </div>
+       <button onClick={handleLogout}>logout</button>
     </footer>
   );
 };
