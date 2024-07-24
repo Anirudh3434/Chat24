@@ -39,7 +39,7 @@ function Home() {
       <div className='container'>
         <div className='title-area'>
            <h1>Create Chat</h1>
-           <h3 className=''>"Hi {username}! Welcome to our messaging platform. <br />Ready to start a new conversation?"</h3>
+           <h3 className=''>"Hi ! Welcome to our messaging platform. <br />Ready to start a new conversation?"</h3>
            <button className='start1' onClick={signup}>Get Started</button>
         </div>
        

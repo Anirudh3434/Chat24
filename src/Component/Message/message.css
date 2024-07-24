@@ -1,6 +1,6 @@
 .m-container{
     width: 100%;
-    height: 60vh;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -33,6 +33,12 @@
 @media (max-width: 550px) {
     .m-container{
         flex-direction: column;
+    }
+
+    .m-container button{
+        width: 70%;
+        height: 250px;
+        border-radius: 50px;
     }
     
     
