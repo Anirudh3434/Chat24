@@ -2,11 +2,15 @@ import {React , useEffect , useState} from 'react'
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
 import authService from '../../../Appwrite/auth';
+import { useSelector } from 'react-redux';
+
 
 
 
 function Home() {
   const [username, setUser] = useState(null);
+
+  const status = useSelector((state)=>state.auth.status)
   
   useEffect(() => {
     const fetchUserData = async () => {
@@ -16,11 +20,12 @@ function Home() {
         } catch (error) {
            
             alert(error);
+            setUser(null)
         }
     };
 
     fetchUserData();
-}, []);
+}, [status]);
   
 
     const signup = ()=>{
