@@ -8,7 +8,6 @@ function SignUp() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const createAccount = async (e) => {
@@ -28,8 +27,6 @@ function SignUp() {
             return;
         }
 
-        setLoading(true); // Start loading indicator
-
         try {
             const user = await signUp(email, password, name);
             if (user) {
@@ -43,10 +40,10 @@ function SignUp() {
                     theme: "colored",
                     transition: Bounce
                 });
-                navigate('/login'); // Navigate after success
+               
             }
         } catch (error) {
-            toast.error('Sign-up failed: ' + error.message, {
+            toast.error(error.message, {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -56,9 +53,10 @@ function SignUp() {
                 theme: "colored",
                 transition: Bounce
             });
-            console.error('Sign-up error:', error); // Log error
-        } finally {
-            setLoading(false); // Stop loading indicator
+           
+        }
+        finally{
+          navigate('/login')
         }
     };
 
@@ -110,9 +108,7 @@ function SignUp() {
                             required 
                         />
                     </div>
-                    <button type="submit" className="login-button" disabled={loading}>
-                        {loading ? 'Signing Up...' : 'Sign Up'}
-                    </button>
+                    <button type="submit" className="login-button">Sign Up</button>
                 </form>
                 <span>Already have an account? <Link to='/login' className='switch'>Login</Link></span>
             </div>
