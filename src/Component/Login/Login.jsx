@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import authService from '../../../Appwrite/auth';
 import { useDispatch } from 'react-redux';
 import { logOut, logIn } from '../../../Store/slice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -20,19 +22,42 @@ const Login = () => {
         };
 
         try {
-            await authService.login(data);  // Await the login function
+            await authService.login(data);  
 
-            alert('Logged in successfully');
+            toast.success('Logging Sucessfully', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+                });
             navigate('/');
             dispatch(logIn());
         } catch (error) {
-            alert('Login failed. Please check your credentials.');
-            console.error(error);  // Log error for debugging
+            toast(error);
+            console.error(error); 
         }
     };
 
     return (
         <div className="login-container">
+           <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+transition: Bounce
+/>
             <div className="login-box">
                 <h2>Login</h2>
                 <form onSubmit={login}>

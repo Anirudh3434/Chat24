@@ -6,6 +6,8 @@ import { format } from 'date-fns';
 import service from '../../../Appwrite/database';
 import { addKey , clearKeys } from '../../../Store/slice';
 import { IoMdSend } from "react-icons/io";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function MsgScr() {
@@ -36,8 +38,11 @@ function MsgScr() {
     const fetchMsg = async (e) => {
         e.preventDefault();
 
-        
+      
 
+
+        setInterval(async() => {
+          
         try {
             const response = await service.getAllPosts(key);
             setMessages(response.documents);
@@ -47,6 +52,9 @@ function MsgScr() {
             setError('Failed to fetch messages. Please try again.');
             console.error(error);
         }
+        }, 2000);
+
+        
     };
 
     const sendMsg= async()=>{
@@ -60,9 +68,29 @@ function MsgScr() {
 
             try {
                 const response = await service.createPost(data);
-                alert('msg send')
+                toast.success(' ✔️ Message Sent', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Bounce,
+                    });
             } catch (error) {
-                alert(error)
+                toast.error(error, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                    });
             }
     }
 
@@ -70,6 +98,19 @@ function MsgScr() {
 
     return (
         <div className="msg-scr">
+           <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+transition: Bounce
+/>
             <div className='search'>
                 <form onSubmit={fetchMsg} className='id-search'>
                     <label htmlFor="">Enter Key to get Chat</label>
