@@ -14,8 +14,9 @@
     background-color: transparent;
     border: 5px solid #b345d4;
     border-radius: 50px;
-    font-size: 60px;
+    font-size: 50px;
     color: #b345d4 ;
+    text-align: center;
 }
 
 .m-container button:hover{

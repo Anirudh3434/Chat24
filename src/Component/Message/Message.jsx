@@ -18,8 +18,8 @@ const handleGetMsg=()=>{
 
     return (
         <div className='m-container'>
-           <button onClick={handleGetMsg}><TiMessages /></button>
-           <button onClick={handleAddMsg}><BiMessageSquareAdd /></button>
+           <button onClick={handleGetMsg}><TiMessages />Get</button>
+           <button onClick={handleAddMsg}><BiMessageSquareAdd /> Create</button>
         </div>
     )
 }

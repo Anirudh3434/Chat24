@@ -93,7 +93,7 @@ function MsgScr() {
                 theme: "colored",
                 transition: Bounce
             });
-            setMsg(''); // Clear message input after sending
+            setMsg(''); 
         } catch (error) {
             toast.error('Message sending failed: ' + error.message, {
                 position: "top-center",
