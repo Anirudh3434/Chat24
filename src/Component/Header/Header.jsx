@@ -4,14 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import authService from '../../../Appwrite/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../../Store/slice';
+import {getlogOut} from '../../Firebase/auth'
 
 function Header() {
     const status = useSelector((state) => state.auth.status);
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
 
-    const handleLogout = () => {
-        authService.logout();
+    const handleLogout = async() => {
+       getlogOut()
         dispatch(logOut()); 
         navigate('/');
     };

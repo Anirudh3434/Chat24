@@ -46,6 +46,10 @@ export const getCurrentUserName = () => {
   return user ? user.displayName : null;
 };
 
+export const  getlogOut=()=>{
+    auth.signOut();
+}
+
 export const onAuthStateChangedListener = (callback) => {
   return onAuthStateChanged(auth, callback);
 };
