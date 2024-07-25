@@ -99,9 +99,10 @@
 }
 
 .sendbox {
-    position: sticky; /* Position absolute to stick to the bottom */
+    position: absolute; 
+    z-index: 10;
     bottom: 0;
-    width: 100%; /* Adjust width for margins */
+    width: 100%; 
     height: 100px;
     background-color: aliceblue;
     display: flex;
@@ -159,6 +160,13 @@
     }
 
     .sendbox {
-        height: 80px; /* Adjust height for smaller screens */
+        height: 80px; 
+
     }
+
+    .sendbox button{
+        width: 30%;
+        height: 40px;
+    }
+   
 }

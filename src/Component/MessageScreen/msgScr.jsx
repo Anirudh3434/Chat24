@@ -7,6 +7,7 @@ import service from '../../../Appwrite/database';
 import { addKey , clearKeys } from '../../../Store/slice';
 import { IoMdSend } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify';
+import { FileUploader } from "react-drag-drop-files";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -16,10 +17,21 @@ function MsgScr() {
     const [error, setError] = useState('');
     const [msg , setMsg] = useState('')
     const [username , setUsername] = useState(null)
+    const [file, setFile] = useState(null);
+    const fileTypes = ["JPG", "PNG", "GIF"];
+
+
+    
+    
 
     const now = new Date();
     const date = format(now, 'MMMM dd, yyyy');
     const time = format(now, 'HH:mm:ss');
+
+   
+  const handleChange = (file) => {
+    setFile(file);
+  }
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -120,7 +132,7 @@ transition: Bounce
                         value={key}
                         onChange={(e) => setKey(e.target.value)}
                     />
-                    <button type="submit">Search</button>
+                    <button type="submit">Get</button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>
@@ -146,6 +158,7 @@ transition: Bounce
                 onChange={(e) => setMsg(e.target.value)}
                 />
                 <button onClick={sendMsg}>Send</button>
+               
                     </div>:<></>
                 }
                 
