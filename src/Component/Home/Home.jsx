@@ -1,28 +1,29 @@
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import authService from '../../../Appwrite/auth';
+import { getCurrentUserName } from '../../Firebase/auth'; 
 import { useSelector } from 'react-redux';
 
 function Home() {
-  const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState(null);
   const status = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserData = () => {
       try {
-        const currentUser = await authService.getCurrentUser();
-        setUser(currentUser);
+        const name = getCurrentUserName();
+        setUserName(name);
       } catch (error) {
-        setUser(null);
+        setUserName(null);
+        console.error("Error fetching user data:", error.message);
       }
     };
 
-    if (status !== 'idle') {
+    if (status === 'loggedIn') {
       fetchUserData();
     } else {
-      setUser(null);
+      setUserName(null);
     }
   }, [status]);
 
@@ -35,7 +36,7 @@ function Home() {
       <div className='title-area'>
         <h1>Create Chat</h1>
         <h3>
-          Hi <span className='name'>{user ? user.name : 'Guest'}</span>! Welcome to our messaging platform. <br />
+          Hi <span className='name'>{userName || 'Guest'}</span>! Welcome to our messaging platform. <br />
           Ready to start a new conversation?
         </h3>
         <button className='start1' onClick={handleSignup}>Get Started</button>
