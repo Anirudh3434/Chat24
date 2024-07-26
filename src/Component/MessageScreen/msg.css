@@ -64,12 +64,22 @@
     font-size: 15px;
 }
 
-.chatBubble {
+.chatbubbleOther, .chatbubbleUser {
     width: 250px;
-    padding: 5px;
-    background-color: aliceblue;
+    padding: 10px;
     border-radius: 10px;
     margin: 10px;
+    position: relative;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+}
+.chatbubbleOther {
+    background-color: rgb(88, 255, 132);
+    animation-name: SlideLeft;
+}
+.chatbubbleUser {
+    background-color: aliceblue;
+    animation-name: SlideRight;
 }
 
 .msg-username {
@@ -169,4 +179,26 @@
         height: 40px;
     }
    
+}
+
+
+@keyframes SlideLeft {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes SlideRight {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }

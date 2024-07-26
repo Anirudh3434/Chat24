@@ -20,6 +20,9 @@ function MsgScr() {
     const date = format(now, 'MMMM dd, yyyy');
     const time = format(now, 'HH:mm:ss');
 
+
+
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -157,7 +160,7 @@ function MsgScr() {
 
             <div className='chats'>
                 {messages.map((msg) => (
-                    <div key={msg.$id} className='chatBubble'>
+                    <div key={msg.$id} className={msg.name == username?'chatbubbleUser':'chatbubbleOther'}>
                         <h2 className='msg-username'>{msg.name}</h2>
                         <div className='msg-text-container'>
                             <span className='msg-text'>{msg.message}</span>
