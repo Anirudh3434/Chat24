@@ -14,7 +14,7 @@
 }
 .name{
     color: #b345d4;
-    font-size: 40px;
+    font-size: 35px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: 500;
 }
@@ -38,11 +38,11 @@ h3 {
 .start1 {
     margin-top: 3rem;
     margin-left: 1rem;
-    font-size: 25px;
+    font-size: 20px;
     background-color: black;
     color: white;
     border-radius: 15px;
-    padding: 10px;
+    padding: 8px;
    
 }
 
@@ -68,7 +68,7 @@ h3 {
 @media (max-width: 550px) {
     h1 {
         font-size: 40px;
-        text-align: center;
+       
     }
     h3 {
         font-size: 25px;
@@ -79,5 +79,10 @@ h3 {
     align-items: center;
     height: 60vh;
   }
+
+  .name{
+
+    font-size: 30px;
+}
   
 }

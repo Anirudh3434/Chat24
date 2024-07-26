@@ -24,7 +24,12 @@ function Home() {
   }, [status]);
 
   const handleSignup = () => {
-    navigate('/signup');
+   if(status == 'loggedIn'){
+         navigate('/message')
+   }
+   else{
+    navigate('/login')
+   }
   };
 
   return (
