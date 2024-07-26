@@ -67,44 +67,62 @@ function MsgScr() {
                     });
                 }
             }
-        }, 2000); // Fetch messages every 2 seconds
+        }, 2000); 
 
-        return () => clearInterval(intervalId); // Cleanup interval on component unmount
+        return () => clearInterval(intervalId); 
     }, [key]);
 
     const sendMsg = async () => {
-        const data = {
-            name: username,
-            message: msg,
-            key: key,
-            date: date,
-            time: time
-        };
+        if(msg == ''){
 
-        try {
-            await service.createPost(data);
-            toast.success('Message Sent', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-                transition: Bounce
-            });
-            setMsg(''); 
-        } catch (error) {
-            toast.error('Message sending failed: ' + error.message, {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "light",
-                transition: Bounce
-            });
+            
+                toast.error('Add message Please', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "light",
+                    transition: Bounce
+                });
+        }
+
+        
+        else{
+            const data = {
+                name: username,
+                message: msg,
+                key: key,
+                date: date,
+                time: time
+            };
+    
+            try {
+                await service.createPost(data);
+                toast.success('Message Sent', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored",
+                    transition: Bounce
+                });
+                setMsg(''); 
+            } catch (error) {
+                toast.error('Message sending failed: ' + error.message, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "light",
+                    transition: Bounce
+                });
+            }
         }
     };
 
