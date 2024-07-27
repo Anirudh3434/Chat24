@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // Define the initial state with values from local storage if available
 const initialState = {
     status: localStorage.getItem('authStatus') || 'idle',
-    key: JSON.parse(localStorage.getItem('keyList')) || []
+   
+    messageLength : localStorage.getItem('MsdLength') || 0
 };
 
 const storeSlice = createSlice({
@@ -18,16 +19,13 @@ const storeSlice = createSlice({
             state.status = 'idle';
             localStorage.setItem('authStatus', state.status); 
         },
-        addKey: (state, action) => {
-            state.key.push(action.payload);
-            localStorage.setItem('keyList', JSON.stringify(state.key)); // Update local storage with new key list
-        },
-        clearKeys: (state) => {
-            state.key = [];
-            localStorage.removeItem('keyList'); 
+        updateMessageLength: (state, action) => {
+            state.messageLength = action.payload;
+            localStorage.setItem('MsdLength', state.messageLength);
         }
+
     }
 });
 
-export const { logIn, logOut, addKey, clearKeys } = storeSlice.actions;
+export const { logIn, logOut, updateMessageLength } = storeSlice.actions;
 export default storeSlice.reducer;

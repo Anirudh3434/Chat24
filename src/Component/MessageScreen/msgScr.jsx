@@ -3,9 +3,12 @@ import './msg.css';
 import { format } from 'date-fns';
 import service from '../../../Appwrite/database';
 import { ToastContainer, toast } from 'react-toastify';
+import { updateMessageLength } from '../../../Store/slice';
+import { useDispatch, useSelector } from 'react-redux';
 import { Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getCurrentUser } from '../../Firebase/auth'; // Adjust the path if needed
+import Push from 'push.js';
+import { getCurrentUser } from '../../Firebase/auth'; 
 
 function MsgScr() {
     const [key, setKey] = useState('');
@@ -13,25 +16,21 @@ function MsgScr() {
     const [error, setError] = useState('');
     const [msg, setMsg] = useState('');
     const [username, setUsername] = useState('');
-    const [file, setFile] = useState(null);
-    const fileTypes = ["JPG", "PNG", "GIF"];
 
     const now = new Date();
     const date = format(now, 'MMMM dd, yyyy');
     const time = format(now, 'HH:mm:ss');
 
+    const dispatch = useDispatch();
+    const msglen = useSelector((state) => state.auth.messageLength);
 
-
+    console.log(msglen);
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const currentUser = getCurrentUser();
-                if (currentUser) {
-                    setUsername(currentUser.displayName );
-                } else {
-                    setUsername('Guest');
-                }
+                setUsername(currentUser ? currentUser.displayName : 'Guest');
             } catch (error) {
                 toast.error('Failed to fetch user data: ' + error.message, {
                     position: "top-center",
@@ -49,16 +48,14 @@ function MsgScr() {
         fetchUserData();
     }, []);
 
-    useEffect(() => {
-        const intervalId = setInterval(async () => {
-            if (key) {
-                try {
-                    const response = await service.getAllPosts(key);
-                    setMessages(response.documents);
-                } catch (error) {
-                    setError('Failed to fetch messages. Please try again.');
-                    console.error(error);
-                    toast.error('Failed to fetch messages. Please try again.', {
+    const fetchMessages = async () => {
+        if (key) {
+            try {
+                const response = await service.getAllPosts(key);
+                const MessagesData = response.documents;
+                const msgdifference = MessagesData.length - msglen;
+                if (msgdifference > 0) {
+                    toast.success(`${msgdifference} New Messages`, {
                         position: "top-center",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -68,31 +65,50 @@ function MsgScr() {
                         theme: "colored",
                         transition: Bounce
                     });
+                    Push.create('Hello world!', {
+                        body: 'New Message',
+                        timeout: 3000,
+                        
+                      });
+                    dispatch(updateMessageLength(MessagesData.length));
                 }
-            }
-        }, 2000); 
-
-        return () => clearInterval(intervalId); 
-    }, [key]);
-
-    const sendMsg = async () => {
-        if(msg == ''){
-
-            
-                toast.error('Add message Please', {
+                setMessages(MessagesData);
+            } catch (error) {
+                setError('Failed to fetch messages. Please try again.');
+                console.error(error);
+                toast.error('Failed to fetch messages. Please try again.', {
                     position: "top-center",
-                    autoClose: 2000,
+                    autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
-                    theme: "light",
+                    theme: "colored",
                     transition: Bounce
                 });
+            }
         }
+    };
 
-        
-        else{
+    useEffect(() => {
+        const intervalId = setInterval(fetchMessages, 2000); // Fetch every 2 seconds
+
+        return () => clearInterval(intervalId); 
+    }, [key, msglen]);
+
+    const sendMsg = async () => {
+        if (msg.trim() === '') {
+            toast.error('Add message Please', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "light",
+                transition: Bounce
+            });
+        } else {
             const data = {
                 name: username,
                 message: msg,
@@ -100,7 +116,7 @@ function MsgScr() {
                 date: date,
                 time: time
             };
-    
+
             try {
                 await service.createPost(data);
                 toast.success('Message Sent', {
@@ -113,7 +129,7 @@ function MsgScr() {
                     theme: "colored",
                     transition: Bounce
                 });
-                setMsg(''); 
+                setMsg('');
             } catch (error) {
                 toast.error('Message sending failed: ' + error.message, {
                     position: "top-center",
@@ -142,7 +158,7 @@ function MsgScr() {
                 draggable
                 pauseOnHover
                 theme="colored"
-                transition={Bounce} 
+                transition={Bounce}
             />
             <div className='search'>
                 <form onSubmit={(e) => e.preventDefault()} className='id-search'>
@@ -153,14 +169,14 @@ function MsgScr() {
                         value={key}
                         onChange={(e) => setKey(e.target.value)}
                     />
-                    <button type="button" onClick={() => fetchMsg()}>Get</button>
+                    <button type="button" onClick={fetchMessages}>Get</button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>
 
             <div className='chats'>
                 {messages.map((msg) => (
-                    <div key={msg.$id} className={msg.name == username?'chatbubbleUser':'chatbubbleOther'}>
+                    <div key={msg.$id} className={msg.name === username ? 'chatbubbleUser' : 'chatbubbleOther'}>
                         <h2 className='msg-username'>{msg.name}</h2>
                         <div className='msg-text-container'>
                             <span className='msg-text'>{msg.message}</span>
