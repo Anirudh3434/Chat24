@@ -122,6 +122,8 @@
     box-sizing: border-box;
 }
 
+
+
 .sendbox input {
     width: 80%;
     height: 40px;
@@ -150,6 +152,10 @@
     .search {
         width: 100%;
         
+    }
+
+    .id-search h2{
+        display: none;
     }
     
     .chats {
