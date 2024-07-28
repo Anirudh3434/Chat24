@@ -3,12 +3,11 @@ import './msg.css';
 import { format } from 'date-fns';
 import service from '../../../Appwrite/database';
 import { ToastContainer, toast } from 'react-toastify';
-import { updateMessageLength } from '../../../Store/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Push from 'push.js';
 import { getCurrentUser } from '../../Firebase/auth'; 
+import { updateMessageLength } from '../../../Store/slice'; // Ensure this action exists
 
 function MsgScr() {
     const [key, setKey] = useState('');
@@ -17,20 +16,27 @@ function MsgScr() {
     const [msg, setMsg] = useState('');
     const [username, setUsername] = useState('');
 
+    const dispatch = useDispatch();
+   
     const now = new Date();
     const date = format(now, 'MMMM dd, yyyy');
     const time = format(now, 'HH:mm:ss');
 
-    const dispatch = useDispatch();
-    const msglen = useSelector((state) => state.auth.messageLength);
-
-    console.log(msglen);
-
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const currentUser = getCurrentUser();
-                setUsername(currentUser ? currentUser.displayName : 'Guest');
+            
+                const storedUsername = localStorage.getItem('username');
+                if (storedUsername) {
+                    setUsername(storedUsername);
+                } else {
+                   
+                    const currentUser = getCurrentUser();
+                    const newUsername = currentUser ? currentUser.displayName : '';
+                    setUsername(newUsername);
+           
+                    localStorage.setItem('username', newUsername);
+                }
             } catch (error) {
                 toast.error('Failed to fetch user data: ' + error.message, {
                     position: "top-center",
@@ -44,6 +50,7 @@ function MsgScr() {
                 });
             }
         };
+        
 
         fetchUserData();
     }, []);
@@ -52,30 +59,9 @@ function MsgScr() {
         if (key) {
             try {
                 const response = await service.getAllPosts(key);
-                const MessagesData = response.documents;
-                const msgdifference = MessagesData.length - msglen;
-                if (msgdifference > 0) {
-                    toast.success(`${msgdifference} New Messages`, {
-                        position: "top-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        theme: "colored",
-                        transition: Bounce
-                    });
-                    Push.create('Hello world!', {
-                        body: 'New Message',
-                        timeout: 3000,
-                        
-                      });
-                    dispatch(updateMessageLength(MessagesData.length));
-                }
-                setMessages(MessagesData);
+                setMessages(response.documents);
             } catch (error) {
                 setError('Failed to fetch messages. Please try again.');
-                console.error(error);
                 toast.error('Failed to fetch messages. Please try again.', {
                     position: "top-center",
                     autoClose: 5000,
@@ -91,10 +77,9 @@ function MsgScr() {
     };
 
     useEffect(() => {
-        const intervalId = setInterval(fetchMessages, 2000); // Fetch every 2 seconds
-
-        return () => clearInterval(intervalId); 
-    }, [key, msglen]);
+        const intervalId = setInterval(fetchMessages, 2000); 
+        return () => clearInterval(intervalId);
+    }, [key]);
 
     const sendMsg = async () => {
         if (msg.trim() === '') {
@@ -108,52 +93,52 @@ function MsgScr() {
                 theme: "light",
                 transition: Bounce
             });
-        } else {
-            const data = {
-                name: username,
-                message: msg,
-                key: key,
-                date: date,
-                time: time
-            };
+            return;
+        }
 
-            try {
-                await service.createPost(data);
-                toast.success('Message Sent', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "colored",
-                    transition: Bounce
-                });
-                setMsg('');
-            } catch (error) {
-                toast.error('Message sending failed: ' + error.message, {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
-                    transition: Bounce
-                });
-            }
+        const data = {
+            name: username,
+            message: msg,
+            key: key,
+            date: date,
+            time: time
+        };
+
+        try {
+            await service.createPost(data);
+            toast.success('Message Sent', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+                transition: Bounce
+            });
+            setMsg('');
+        } catch (error) {
+            toast.error('Message sending failed: ' + error.message, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     };
+
+    
+
 
     return (
         <div className="msg-scr">
             <ToastContainer
                 position="top-center"
-                autoClose={2000}
+                autoClose={1000}
                 hideProgressBar={false}
-                newestOnTop={false}
                 closeOnClick
-                rtl={false}
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
@@ -162,6 +147,7 @@ function MsgScr() {
             />
             <div className='search'>
                 <form onSubmit={(e) => e.preventDefault()} className='id-search'>
+                    <h2>Hi {username} 😊</h2>
                     <label htmlFor="">Enter Key to get Chat</label>
                     <input
                         type="password"

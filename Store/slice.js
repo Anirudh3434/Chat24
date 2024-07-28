@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Define the initial state with values from local storage if available
+
 const initialState = {
     status: localStorage.getItem('authStatus') || 'idle',
    
-    messageLength : localStorage.getItem('MsdLength') || 0
+    MessageInfo : localStorage.getItem('MsdLength') || [{Key: '', messageLength: 0 }]
 };
 
 const storeSlice = createSlice({

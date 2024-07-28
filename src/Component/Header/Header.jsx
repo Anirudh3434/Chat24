@@ -14,6 +14,7 @@ function Header() {
     const handleLogout = async() => {
        getlogOut()
         dispatch(logOut()); 
+        localStorage.removeItem('username');
         navigate('/');
     };
 
