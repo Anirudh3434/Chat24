@@ -42,9 +42,7 @@ function Header() {
                     {status === 'loggedIn' ? (
                        
                        <>
-                         <div className='menu'>
-                          <Menubar/>
-                         </div>
+                       
                           <button className='login' onClick={handleMessage}>Message</button>
                         <button className='start' onClick={handleLogout}>Log out</button>
                      
