@@ -5,6 +5,8 @@ import authService from '../../../Appwrite/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../../Store/slice';
 import {getlogOut} from '../../Firebase/auth'
+import Menubar from '../MenuBar/MenuBar.jsx'
+
 
 function Header() {
     const status = useSelector((state) => state.auth.status);
@@ -40,6 +42,9 @@ function Header() {
                     {status === 'loggedIn' ? (
                        
                        <>
+                         <div className='menu'>
+                          <Menubar/>
+                         </div>
                           <button className='login' onClick={handleMessage}>Message</button>
                         <button className='start' onClick={handleLogout}>Log out</button>
                      
@@ -48,6 +53,7 @@ function Header() {
                      
                     ) : (
                         <>
+                         
                             <button className='login' onClick={handleLogin}>Login</button>
                             <button className='start' onClick={handleSignup}>Get Started</button>
                         </>
