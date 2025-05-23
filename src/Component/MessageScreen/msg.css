@@ -1,7 +1,7 @@
 .msg-scr {
     width: 100%;
     height: 100vh;
-    background-color: rgb(208, 252, 208);
+    background-color: #f0f4f8; /* Light gray-blue */
     display: flex;
     flex-direction: row;
 }
@@ -18,35 +18,36 @@
     width: 70%;
     height: 90%;
     display: flex;
-    overflow-y: scroll;
+    overflow-y: auto;
     flex-direction: column;
-    align-items: stretch; /* Stretch to fill container */
-    background-color: rgb(174, 254, 174);
+    align-items: stretch;
+    background-color: #e3f2fd; /* Light blue */
     margin: 20px;
     border-radius: 20px;
-    position: relative; /* Position relative to place sendbox */
-    overflow-y: auto; /* Scroll if content overflows */
+    position: relative;
 }
 
 .id-search {
     padding: 20px;
-    background-color: rgb(215, 237, 255);
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 20px;
     border-radius: 20px;
-    border: black 1px solid;
+    border: 1px solid #90caf9; /* Blue-gray */
 }
 
 .search button {
     width: 60%;
     height: 40px;
     margin: 10px;
-    background-color: rgb(168, 248, 168);
+    background-color: #81c784; /* Green */
+    color: white;
     border-radius: 10px;
     border: none;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .id-search input {
@@ -57,11 +58,13 @@
     height: 50px;
     font-size: 20px;
     text-align: center;
+    background-color: #f1f8e9;
 }
 
 .search label {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', sans-serif;
     font-size: 15px;
+    color: #333;
 }
 
 .chatbubbleOther, .chatbubbleUser {
@@ -73,23 +76,28 @@
     animation-duration: 0.5s;
     animation-timing-function: ease-in-out;
 }
+
 .chatbubbleOther {
-    background-color: rgb(88, 255, 132);
+    background-color: #a5d6a7; /* Soft green */
     animation-name: SlideLeft;
 }
+
 .chatbubbleUser {
-    background-color: aliceblue;
+    background-color: #ffffff;
     animation-name: SlideRight;
+    border: 1px solid #bbdefb; /* Light blue border for separation */
 }
 
 .msg-username {
     font-size: 15px;
+    color: #616161;
 }
 
 .msg-text {
     font-size: 15px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', sans-serif;
     font-weight: 700;
+    color: #212121;
 }
 
 .msg-text-container {
@@ -103,18 +111,14 @@
     justify-content: space-between;
     margin-top: 2px;
     border-radius: 5px;
-    margin-bottom: 0;
-    margin-left: 0;
-    margin-right: 0;
 }
 
 .sendbox {
-    
     z-index: 10;
     bottom: 0;
-    width: 100%; 
+    width: 100%;
     height: 100px;
-    background-color: aliceblue;
+    background-color: #f5f5f5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -122,14 +126,13 @@
     box-sizing: border-box;
 }
 
-
-
 .sendbox input {
     width: 80%;
     height: 40px;
     border-radius: 10px;
     border: 1px solid #ccc;
     padding: 0 10px;
+    background-color: #ffffff;
 }
 
 .sendbox button {
@@ -137,11 +140,11 @@
     height: 40px;
     border-radius: 10px;
     border: none;
-    background-color: rgb(168, 248, 168);
+    background-color: #64b5f6; /* Light blue */
+    color: white;
     font-size: 20px;
     margin-left: 5px;
-    
-
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {
@@ -151,20 +154,19 @@
 
     .search {
         width: 100%;
-        
     }
 
-    .id-search h2{
+    .id-search h2 {
         display: none;
     }
-    
+
     .chats {
         width: 90%;
         margin-top: 0;
         height: 80%;
     }
 
-    .search label{
+    .search label {
         font-size: 10px;
     }
 
@@ -176,17 +178,14 @@
     }
 
     .sendbox {
-        height: 80px; 
-
+        height: 80px;
     }
 
-    .sendbox button{
+    .sendbox button {
         width: 30%;
         height: 40px;
     }
-   
 }
-
 
 @keyframes SlideLeft {
     0% {
@@ -198,6 +197,7 @@
         opacity: 1;
     }
 }
+
 @keyframes SlideRight {
     0% {
         transform: translateX(-100%);
